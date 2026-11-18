@@ -1,0 +1,753 @@
+// Estado inicial com livros de exemplo
+
+const livrosIniciais = [
+
+    {
+
+        id: 1,
+
+        titulo: "Clean Code",
+
+        autor: "Robert C. Martin",
+
+        categoria: "Tecnologia",
+
+        preco: 89.90,
+
+        estoque: 4,
+
+        emprestados: 1,
+
+        vendidos: 2
+
+    },
+
+    {
+
+        id: 2,
+
+        titulo: "Dom Casmurro",
+
+        autor: "Machado de Assis",
+
+        categoria: "Ficção",
+
+        preco: 34.50,
+
+        estoque: 6,
+
+        emprestados: 0,
+
+        vendidos: 5
+
+    },
+
+    {
+
+        id: 3,
+
+        titulo: "Sapiens: Uma Breve História da Humanidade",
+
+        autor: "Yuval Noah Harari",
+
+        categoria: "História",
+
+        preco: 64.00,
+
+        estoque: 2,
+
+        emprestados: 2,
+
+        vendidos: 3
+
+    },
+
+    {
+
+        id: 4,
+
+        titulo: "Uma Breve História do Tempo",
+
+        autor: "Stephen Hawking",
+
+        categoria: "Ciências",
+
+        preco: 52.00,
+
+        estoque: 0,
+
+        emprestados: 3,
+
+        vendidos: 4
+
+    },
+
+    {
+
+        id: 5,
+
+        titulo: "Pai Rico, Pai Pobre",
+
+        autor: "Robert Kiyosaki",
+
+        categoria: "Negócios",
+
+        preco: 45.90,
+
+        estoque: 8,
+
+        emprestados: 1,
+
+        vendidos: 9
+
+    }
+
+];
+
+
+
+let livros = JSON.parse(localStorage.getItem('biblioteca_livros')) || livrosIniciais;
+
+
+
+// Elementos do Formulário e Catálogo
+
+const livroForm = document.getElementById('livroForm');
+
+const livroIdInput = document.getElementById('livroId');
+
+const tituloInput = document.getElementById('titulo');
+
+const autorInput = document.getElementById('autor');
+
+const categoriaInput = document.getElementById('categoria');
+
+const precoInput = document.getElementById('preco');
+
+const estoqueInput = document.getElementById('estoque');
+
+
+
+const formTitulo = document.getElementById('formTitulo');
+
+const btnSalvar = document.getElementById('btnSalvar');
+
+const btnCancelar = document.getElementById('btnCancelar');
+
+const listaLivrosEl = document.getElementById('listaLivros');
+
+
+
+// Elementos da Aba de Pesquisa Avançada
+
+const pesquisaTexto = document.getElementById('pesquisaTexto');
+
+const filtroCategoria = document.getElementById('filtroCategoria');
+
+const filtroStatus = document.getElementById('filtroStatus');
+
+const filtroOrdenacao = document.getElementById('filtroOrdenacao');
+
+const btnLimparPesquisa = document.getElementById('btnLimparPesquisa');
+
+const resultadosPesquisaEl = document.getElementById('resultadosPesquisa');
+
+const contadorResultadosEl = document.getElementById('contadorResultados');
+
+
+
+// Busca rápida da barra de navegação
+
+const inputBuscaTopo = document.getElementById('inputBuscaTopo');
+
+const btnBuscaTopo = document.getElementById('btnBuscaTopo');
+
+
+
+// Salva no navegador e atualiza tudo
+
+function salvarDados() {
+
+    localStorage.setItem('biblioteca_livros', JSON.stringify(livros));
+
+    atualizarPainelResumo();
+
+}
+
+
+
+function atualizarTudo() {
+
+    renderizarPesquisa();
+
+    renderizarCatalogoCompleto();
+
+    atualizarPainelResumo();
+
+}
+
+
+
+// Atualiza contadores do resumo
+
+function atualizarPainelResumo() {
+
+    document.getElementById('totalLivros').textContent = livros.length;
+
+    document.getElementById('totalDisponiveis').textContent = livros.reduce((acc, l) => acc + l.estoque, 0);
+
+    document.getElementById('totalEmprestados').textContent = livros.reduce((acc, l) => acc + l.emprestados, 0);
+
+    document.getElementById('totalVendidos').textContent = livros.reduce((acc, l) => acc + l.vendidos, 0);
+
+}
+
+
+
+// Cria o HTML de um card de livro (reutilizado na Pesquisa e no Catálogo)
+
+function criarCardLivro(livro) {
+
+    const card = document.createElement('div');
+
+    card.className = 'livro-card';
+
+
+
+    card.innerHTML = `
+
+        <div>
+
+            <span class="livro-badge">${livro.categoria}</span>
+
+            <h4>${livro.titulo}</h4>
+
+            <p class="livro-autor">por ${livro.autor}</p>
+
+
+
+            <div class="livro-detalhes">
+
+                <div class="livro-preco">R$ ${livro.preco.toFixed(2).replace('.', ',')}</div>
+
+                <div><strong>Disponível em estoque:</strong> ${livro.estoque} un.</div>
+
+                <div><strong>Emprestados:</strong> ${livro.emprestados} un.</div>
+
+                <div><strong>Vendidos:</strong> ${livro.vendidos} un.</div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="livro-acoes">
+
+            <button class="btn-acao btn-emprestar" onclick="emprestarLivro(${livro.id})" ${livro.estoque === 0 ? 'disabled' : ''}>
+
+                Emprestar
+
+            </button>
+
+            <button class="btn-acao btn-devolver" onclick="devolverLivro(${livro.id})" ${livro.emprestados === 0 ? 'disabled' : ''}>
+
+                Devolver
+
+            </button>
+
+            <button class="btn-acao btn-comprar" onclick="comprarLivro(${livro.id})" ${livro.estoque === 0 ? 'disabled' : ''}>
+
+                Comprar
+
+            </button>
+
+            <button class="btn-acao btn-editar" onclick="prepararEdicao(${livro.id})">
+
+                Editar
+
+            </button>
+
+            <button class="btn-acao btn-excluir" onclick="excluirLivro(${livro.id})">
+
+                Excluir do Acervo
+
+            </button>
+
+        </div>
+
+    `;
+
+    return card;
+
+}
+
+
+
+// Renderiza a aba exclusiva de Pesquisa Avançada
+
+function renderizarPesquisa() {
+
+    const termo = pesquisaTexto.value.toLowerCase().trim();
+
+    const categoria = filtroCategoria.value;
+
+    const status = filtroStatus.value;
+
+    const ordenacao = filtroOrdenacao.value;
+
+
+
+    let filtrados = livros.filter(livro => {
+
+        // Filtro por texto (título ou autor)
+
+        const bateTexto = livro.titulo.toLowerCase().includes(termo) ||
+
+                          livro.autor.toLowerCase().includes(termo);
+
+
+
+        // Filtro por categoria
+
+        const bateCategoria = categoria === 'todas' || livro.categoria === categoria;
+
+
+
+        // Filtro por disponibilidade
+
+        let bateStatus = true;
+
+        if (status === 'disponivel') bateStatus = livro.estoque > 0;
+
+        if (status === 'emprestado') bateStatus = livro.emprestados > 0;
+
+        if (status === 'esgotado')   bateStatus = livro.estoque === 0;
+
+
+
+        return bateTexto && bateCategoria && bateStatus;
+
+    });
+
+
+
+    // Ordenação
+
+    if (ordenacao === 'az') {
+
+        filtrados.sort((a, b) => a.titulo.localeCompare(b.titulo));
+
+    } else if (ordenacao === 'menor-preco') {
+
+        filtrados.sort((a, b) => a.preco - b.preco);
+
+    } else if (ordenacao === 'maior-preco') {
+
+        filtrados.sort((a, b) => b.preco - a.preco);
+
+    } else if (ordenacao === 'maior-estoque') {
+
+        filtrados.sort((a, b) => b.estoque - a.estoque);
+
+    } else {
+
+        filtrados.sort((a, b) => b.id - a.id);
+
+    }
+
+
+
+    // Atualiza contador
+
+    contadorResultadosEl.textContent = filtrados.length === 1
+
+        ? '1 livro encontrado'
+
+        : `${filtrados.length} livros encontrados`;
+
+
+
+    // Renderiza resultados
+
+    resultadosPesquisaEl.innerHTML = '';
+
+    if (filtrados.length === 0) {
+
+        resultadosPesquisaEl.innerHTML = `
+
+            <div class="sem-resultados">
+
+                <h4>Nenhum livro encontrado</h4>
+
+                <p>Tente buscar por outro termo ou clique em "Limpar Filtros".</p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    filtrados.forEach(livro => {
+
+        resultadosPesquisaEl.appendChild(criarCardLivro(livro));
+
+    });
+
+}
+
+
+
+// Renderiza a lista completa na seção Gerenciar Livros
+
+function renderizarCatalogoCompleto() {
+
+    listaLivrosEl.innerHTML = '';
+
+    if (livros.length === 0) {
+
+        listaLivrosEl.innerHTML = '<p>Nenhum livro cadastrado no acervo.</p>';
+
+        return;
+
+    }
+
+
+
+    livros.forEach(livro => {
+
+        listaLivrosEl.appendChild(criarCardLivro(livro));
+
+    });
+
+}
+
+
+
+// Eventos dos filtros da aba Pesquisa
+
+pesquisaTexto.addEventListener('input', () => {
+
+    inputBuscaTopo.value = pesquisaTexto.value;
+
+    renderizarPesquisa();
+
+});
+
+
+
+filtroCategoria.addEventListener('change', renderizarPesquisa);
+
+filtroStatus.addEventListener('change', renderizarPesquisa);
+
+filtroOrdenacao.addEventListener('change', renderizarPesquisa);
+
+
+
+// Botão Limpar Filtros
+
+btnLimparPesquisa.addEventListener('click', () => {
+
+    pesquisaTexto.value = '';
+
+    inputBuscaTopo.value = '';
+
+    filtroCategoria.value = 'todas';
+
+    filtroStatus.value = 'todos';
+
+    filtroOrdenacao.value = 'recentes';
+
+    renderizarPesquisa();
+
+});
+
+
+
+// Sincroniza busca rápida do menu superior com a aba de Pesquisa
+
+function executarBuscaTopo() {
+
+    pesquisaTexto.value = inputBuscaTopo.value;
+
+    renderizarPesquisa();
+
+    document.getElementById('pesquisa').scrollIntoView({ behavior: 'smooth' });
+
+}
+
+
+
+btnBuscaTopo.addEventListener('click', executarBuscaTopo);
+
+inputBuscaTopo.addEventListener('keypress', (e) => {
+
+    if (e.key === 'Enter') executarBuscaTopo();
+
+});
+
+
+
+// Ao clicar em um card de Categoria na home, leva direto para a aba de Pesquisa já filtrada
+
+function filtrarPorCategoria(nomeCategoria) {
+
+    filtroCategoria.value = nomeCategoria;
+
+    renderizarPesquisa();
+
+    document.getElementById('pesquisa').scrollIntoView({ behavior: 'smooth' });
+
+}
+
+
+
+// Cadastrar ou Salvar Edição
+
+livroForm.addEventListener('submit', function (e) {
+
+    e.preventDefault();
+
+
+
+    const id = livroIdInput.value;
+
+    const dadosLivro = {
+
+        titulo: tituloInput.value.trim(),
+
+        autor: autorInput.value.trim(),
+
+        categoria: categoriaInput.value,
+
+        preco: parseFloat(precoInput.value),
+
+        estoque: parseInt(estoqueInput.value, 10)
+
+    };
+
+
+
+    if (id) {
+
+        const index = livros.findIndex(l => l.id === Number(id));
+
+        if (index !== -1) {
+
+            livros[index] = { ...livros[index], ...dadosLivro };
+
+            alert('Livro atualizado com sucesso!');
+
+        }
+
+    } else {
+
+        const novoLivro = {
+
+            id: Date.now(),
+
+            ...dadosLivro,
+
+            emprestados: 0,
+
+            vendidos: 0
+
+        };
+
+        livros.push(novoLivro);
+
+        alert('Livro cadastrado com sucesso!');
+
+    }
+
+
+
+    resetarFormulario();
+
+    salvarDados();
+
+    atualizarTudo();
+
+});
+
+
+
+// Preenche o formulário para edição
+
+function prepararEdicao(id) {
+
+    const livro = livros.find(l => l.id === id);
+
+    if (!livro) return;
+
+
+
+    livroIdInput.value = livro.id;
+
+    tituloInput.value = livro.titulo;
+
+    autorInput.value = livro.autor;
+
+    categoriaInput.value = livro.categoria;
+
+    precoInput.value = livro.preco;
+
+    estoqueInput.value = livro.estoque;
+
+
+
+    formTitulo.textContent = `Editando: ${livro.titulo}`;
+
+    btnSalvar.textContent = 'Salvar Alterações';
+
+    btnCancelar.style.display = 'inline-block';
+
+
+
+    document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth' });
+
+}
+
+
+
+function resetarFormulario() {
+
+    livroForm.reset();
+
+    livroIdInput.value = '';
+
+    formTitulo.textContent = 'Cadastrar Novo Livro';
+
+    btnSalvar.textContent = 'Cadastrar Livro';
+
+    btnCancelar.style.display = 'none';
+
+}
+
+
+
+btnCancelar.addEventListener('click', resetarFormulario);
+
+
+
+// Emprestar
+
+function emprestarLivro(id) {
+
+    const livro = livros.find(l => l.id === id);
+
+    if (!livro || livro.estoque <= 0) return;
+
+
+
+    const leitor = prompt(`Informe o nome do leitor que vai pegar "${livro.titulo}" emprestado:`);
+
+    if (!leitor || leitor.trim() === '') return;
+
+
+
+    livro.estoque -= 1;
+
+    livro.emprestados += 1;
+
+
+
+    salvarDados();
+
+    atualizarTudo();
+
+    alert(`Empréstimo registrado para ${leitor.trim()}!`);
+
+}
+
+
+
+// Devolver
+
+function devolverLivro(id) {
+
+    const livro = livros.find(l => l.id === id);
+
+    if (!livro || livro.emprestados <= 0) return;
+
+
+
+    livro.emprestados -= 1;
+
+    livro.estoque += 1;
+
+
+
+    salvarDados();
+
+    atualizarTudo();
+
+    alert(`Devolução de "${livro.titulo}" registrada com sucesso!`);
+
+}
+
+
+
+// Comprar
+
+function comprarLivro(id) {
+
+    const livro = livros.find(l => l.id === id);
+
+    if (!livro || livro.estoque <= 0) return;
+
+
+
+    const confirmar = confirm(`Confirmar a compra de "${livro.titulo}" por R$ ${livro.preco.toFixed(2).replace('.', ',')}?`);
+
+    if (!confirmar) return;
+
+
+
+    livro.estoque -= 1;
+
+    livro.vendidos += 1;
+
+
+
+    salvarDados();
+
+    atualizarTudo();
+
+    alert(`Compra realizada! Obrigado por adquirir "${livro.titulo}".`);
+
+}
+
+
+
+// Excluir
+
+function excluirLivro(id) {
+
+    const livro = livros.find(l => l.id === id);
+
+    if (!livro) return;
+
+
+
+    if (confirm(`Tem certeza que deseja excluir "${livro.titulo}" do acervo?`)) {
+
+        livros = livros.filter(l => l.id !== id);
+
+        salvarDados();
+
+        atualizarTudo();
+
+    }
+
+}
+
+
+
+// Inicializa a aplicação
+
+atualizarTudo();
