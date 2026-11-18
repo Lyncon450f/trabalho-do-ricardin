@@ -107,6 +107,43 @@ const livrosIniciais = [
 
 
 let livros = JSON.parse(localStorage.getItem('biblioteca_livros')) || livrosIniciais;
+const supabaseClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+
+async function carregarLivrosDoBanco() {
+    const { data, error } = await supabaseClient
+        .from('livros')
+        .select('*')
+        .order('id', { ascending: true });
+
+    if (error) throw error;
+
+    if (data.length > 0) {
+        livros = data.map(l => ({
+            ...l,
+            preco: Number(l.preco),
+            estoque: Number(l.estoque),
+            emprestados: Number(l.emprestados),
+            vendidos: Number(l.vendidos)
+        }));
+    } else {
+        const dadosIniciais = livros.map(({ id, ...l }) => l);
+        const { data: inseridos, error: erroInsert } = await supabaseClient
+            .from('livros')
+            .insert(dadosIniciais)
+            .select();
+
+        if (erroInsert) throw erroInsert;
+        livros = inseridos.map(l => ({
+            ...l,
+            preco: Number(l.preco),
+            estoque: Number(l.estoque),
+            emprestados: Number(l.emprestados),
+            vendidos: Number(l.vendidos)
+        }));
+    }
+
+    localStorage.setItem('biblioteca_livros', JSON.stringify(livros));
+}
 
 
 
@@ -166,12 +203,18 @@ const btnBuscaTopo = document.getElementById('btnBuscaTopo');
 
 // Salva no navegador e atualiza tudo
 
-function salvarDados() {
-
+async function salvarDados() {
     localStorage.setItem('biblioteca_livros', JSON.stringify(livros));
-
     atualizarPainelResumo();
 
+    const { error } = await supabaseClient
+        .from('livros')
+        .upsert(livros, { onConflict: 'id' });
+
+    if (error) {
+        console.error('Erro ao salvar no Supabase:', error);
+        alert('Não foi possível salvar no banco de dados. Confira a configuração e as permissões do Supabase.');
+    }
 }
 
 
@@ -736,6 +779,12 @@ function excluirLivro(id) {
 
     if (confirm(`Tem certeza que deseja excluir "${livro.titulo}" do acervo?`)) {
 
+        const { error } = await supabaseClient.from('livros').delete().eq('id', id);
+        if (error) {
+            console.error('Erro ao excluir no Supabase:', error);
+            alert('Não foi possível excluir o livro do banco de dados.');
+            return;
+        }
         livros = livros.filter(l => l.id !== id);
 
         salvarDados();
@@ -748,6 +797,14 @@ function excluirLivro(id) {
 
 
 
-// Inicializa a aplicação
-
-atualizarTudo();
+// Inicializa a aplicação carregando os dados compartilhados do Supabase.
+(async function iniciarAplicacao() {
+    try {
+        await carregarLivrosDoBanco();
+        atualizarTudo();
+    } catch (error) {
+        console.error('Erro ao conectar ao Supabase:', error);
+        alert('Não foi possível carregar os livros do banco. Verifique se executou supabase/schema.sql no SQL Editor do Supabase e confira a configuração.');
+        atualizarTudo();
+    }
+})();
