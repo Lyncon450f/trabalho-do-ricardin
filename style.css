@@ -521,3 +521,226 @@ header {
 .btn-comprar   { background-color: #0b910b; }
 .btn-editar    { background-color: #f59e0b; color: #000; }
 .btn-excluir   { background-color: #dc3545; grid-column: span 2; }
+
+
+/* Ajustes de alinhamento e responsividade */
+.navmenu {
+    flex: 1;
+    justify-content: flex-end;
+    min-width: 0;
+}
+
+.navmenu ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.main-header {
+    min-height: 520px;
+}
+
+.main-header > .header {
+    flex: 1 1 50%;
+    min-width: 0;
+}
+
+.main-header > img {
+    display: block;
+    width: min(44%, 480px);
+    max-height: 430px;
+    object-fit: contain;
+}
+
+.cat-header p {
+    line-height: 1.6;
+}
+
+.pesquisa-section,
+.catalogo-section {
+    overflow: hidden;
+}
+
+.pesquisa-barra-principal input {
+    min-width: 0;
+}
+
+.livros-grid {
+    align-items: stretch;
+}
+
+.livro-card {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.form-actions {
+    flex-wrap: wrap;
+}
+
+@media (max-width: 1050px) {
+    .navbar {
+        height: auto;
+        min-height: 80px;
+        padding: 16px 24px;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .navmenu {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .main-header,
+    .categories {
+        width: 88%;
+    }
+
+    .main-header h2 {
+        font-size: clamp(30px, 5vw, 42px);
+    }
+}
+
+@media (max-width: 700px) {
+    .navbar {
+        justify-content: center;
+        padding: 16px;
+    }
+
+    .navbar h2 {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .navmenu {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .navmenu ul {
+        width: 100%;
+        gap: 6px;
+    }
+
+    .navmenu li a {
+        display: inline-block;
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .campo-de-busca {
+        width: min(100%, 340px);
+    }
+
+    .campo-de-busca .procurar {
+        width: 100%;
+    }
+
+    .main-header {
+        width: 90%;
+        min-height: auto;
+        padding: 48px 0;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .main-header h2 {
+        font-size: 34px;
+    }
+
+    .main-header p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-btns {
+        justify-content: center;
+    }
+
+    .main-header > img {
+        width: min(85%, 340px);
+        max-height: 280px;
+    }
+
+    .categories {
+        width: 90%;
+        padding: 55px 0;
+    }
+
+    .cat-books {
+        justify-content: center;
+    }
+
+    .pesquisa-section,
+    .catalogo-section {
+        padding: 55px 5%;
+    }
+
+    .pesquisa-box,
+    .form-container {
+        padding: 20px;
+    }
+
+    .pesquisa-barra-principal {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .pesquisa-barra-principal i {
+        font-size: 20px;
+        margin-right: 4px;
+    }
+
+    .pesquisa-barra-principal input {
+        flex: 1 1 calc(100% - 40px);
+        font-size: 14px;
+    }
+
+    .btn-limpar-pesquisa {
+        width: 100%;
+    }
+
+    .resumo-painel {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .card-resumo {
+        padding: 16px 10px;
+    }
+
+    .card-resumo span {
+        font-size: 26px;
+    }
+
+    .livros-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 380px) {
+    .resumo-painel {
+        grid-template-columns: 1fr;
+    }
+
+    .main-header h2 {
+        font-size: 29px;
+    }
+
+    .livro-acoes {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-excluir {
+        grid-column: auto;
+    }
+}
