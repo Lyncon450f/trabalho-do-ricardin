@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 
-<html *lang*="pt-br">
+<html lang="pt-br">
 
 <head>
 
-    <meta *charset*="UTF-8">
+    <meta charset="UTF-8">
 
-    <meta *http-equiv*="X-UA-Compatible" *content*="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <meta *name*="viewport" *content*="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Biblioteca On-line</title>
 
     <!-- Google Fonts: Poppins -->
 
-    <link *href*="https\://fonts.googleapis.com/css2?family=Poppins:wght\@300;400;500;600;700&display=swap" *rel*="stylesheet">
+    <link href="https\://fonts.googleapis.com/css2?family=Poppins:wght\@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Boxicons CDN -->
 
-    <link *rel*="stylesheet" *href*="https\://unpkg.com/boxicons\@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https\://unpkg.com/boxicons\@latest/css/boxicons.min.css">
 
     <!-- CSS Customizado -->
 
-    <link *rel*="stylesheet" *href*="./style.css">
+    <link rel="stylesheet" href="./style.css">
 
 </head>
 
 <body>
 
-    <header *id*="inicio">
+    <header id="inicio">
 
-        <nav *class*="navbar">
+        <nav class="navbar">
 
-            <div *class*="logo">
+            <div class="logo">
 
                 <h2>Biblioteca On-line</h2>
 
@@ -40,27 +40,27 @@
 
 
 
-            <div *class*="navmenu">
+            <div class="navmenu">
 
                 <ul>        
 
-                    <li><a *href*="#inicio">Início</a></li>
+                    <li><a href="#inicio">Início</a></li>
 
-                    <li><a *href*="#categorias">Categorias</a></li>
+                    <li><a href="#categorias">Categorias</a></li>
 
-                    <li><a *href*="#pesquisa" *class*="nav-destaque"><i *class*="bx bx-search"></i> Pesquisar</a></li>
+                    <li><a href="#pesquisa" class="nav-destaque"><i class="bx bx-search"></i> Pesquisar</a></li>
 
-                    <li><a *href*="#catalogo">Gerenciar Livros</a></li>
+                    <li><a href="#catalogo">Gerenciar Livros</a></li>
 
                 </ul>
 
 
 
-                <div *class*="campo-de-busca">
+                <div class="campo-de-busca">
 
-                    <input *type*="search" *id*="inputBuscaTopo" *class*="procurar" *placeholder*="Busca rápida...">
+                    <input type="search" id="inputBuscaTopo" class="procurar" placeholder="Busca rápida...">
 
-                    <i *class*="bx bx-search" *id*="btnBuscaTopo"></i>
+                    <i class="bx bx-search" id="btnBuscaTopo"></i>
 
                 </div>
 
@@ -70,9 +70,9 @@
 
 
 
-        <div *class*="main-header">
+        <div class="main-header">
 
-            <div *class*="header">
+            <div class="header">
 
                 <h5>Biblioteca On-line</h5>
 
@@ -80,11 +80,11 @@
 
                 <p>Gerencie seu acervo, pesquise títulos com filtros avançados, controle empréstimos e realize vendas em um só lugar.</p>
 
-                <div *class*="hero-btns">
+                <div class="hero-btns">
 
-                    <a *href*="#pesquisa" *class*="btn">Pesquisar no Acervo</a>
+                    <a href="#pesquisa" class="btn">Pesquisar no Acervo</a>
 
-                    <a *href*="#catalogo" *class*="btn btn-outline">Cadastrar Livro</a>
+                    <a href="#catalogo" class="btn btn-outline">Cadastrar Livro</a>
 
                 </div>
 
@@ -92,7 +92,7 @@
 
 
 
-            <img *src*="./images/slider-img.png" *alt*="Ilustração principal da biblioteca">
+            <img src="./images/slider-img.png" alt="Ilustração principal da biblioteca">
 
         </div>
 
@@ -102,11 +102,11 @@
 
     <!-- Seção de Categorias -->
 
-    <section *class*="categories" *id*="categorias">
+    <section class="categories" id="categorias">
 
-        <div *class*="cat-row">
+        <div class="cat-row">
 
-            <div *class*="cat-header">
+            <div class="cat-header">
 
                 <h2>Categorias de Livros</h2>
 
@@ -116,11 +116,11 @@
 
 
 
-            <div *class*="cat-books">
+            <div class="cat-books">
 
-                <div *class*="books cat-clicavel" *onclick*="filtrarPorCategoria('Ficção')">
+                <div class="books cat-clicavel" onclick="filtrarPorCategoria('Ficção')">
 
-                    <div *class*="book-img"><img *src*="./images/cat1.png" *alt*="Ficção"></div>
+                    <div class="book-img"><img src="./images/cat1.png" alt="Ficção"></div>
 
                     <h4>Ficção</h4>
 
@@ -128,9 +128,9 @@
 
                 </div>
 
-                <div *class*="books cat-clicavel" *onclick*="filtrarPorCategoria('Tecnologia')">
+                <div class="books cat-clicavel" onclick="filtrarPorCategoria('Tecnologia')">
 
-                    <div *class*="book-img"><img *src*="./images/cat2.png" *alt*="Tecnologia"></div>
+                    <div class="book-img"><img src="./images/cat2.png" alt="Tecnologia"></div>
 
                     <h4>Tecnologia</h4>
 
@@ -138,9 +138,9 @@
 
                 </div>
 
-                <div *class*="books cat-clicavel" *onclick*="filtrarPorCategoria('História')">
+                <div class="books cat-clicavel" onclick="filtrarPorCategoria('História')">
 
-                    <div *class*="book-img"><img *src*="./images/cat3.png" *alt*="História"></div>
+                    <div class="book-img"><img src="./images/cat3.png" alt="História"></div>
 
                     <h4>História</h4>
 
@@ -148,9 +148,9 @@
 
                 </div>
 
-                <div *class*="books cat-clicavel" *onclick*="filtrarPorCategoria('Ciências')">
+                <div class="books cat-clicavel" onclick="filtrarPorCategoria('Ciências')">
 
-                    <div *class*="book-img"><img *src*="./images/cat4.png" *alt*="Ciências"></div>
+                    <div class="book-img"><img src="./images/cat4.png" alt="Ciências"></div>
 
                     <h4>Ciências</h4>
 
@@ -158,9 +158,9 @@
 
                 </div>
 
-                <div *class*="books cat-clicavel" *onclick*="filtrarPorCategoria('Negócios')">
+                <div class="books cat-clicavel" onclick="filtrarPorCategoria('Negócios')">
 
-                    <div *class*="book-img"><img *src*="./images/cat5.png" *alt*="Negócios"></div>
+                    <div class="book-img"><img src="./images/cat5.png" alt="Negócios"></div>
 
                     <h4>Negócios</h4>
 
@@ -178,9 +178,9 @@
 
     <!-- ABA EXCLUSIVA DE PESQUISA AVANÇADA -->
 
-    <section *class*="pesquisa-section" *id*="pesquisa">
+    <section class="pesquisa-section" id="pesquisa">
 
-        <div *class*="cat-header">
+        <div class="cat-header">
 
             <h2>Pesquisa Avançada no Acervo</h2>
 
@@ -190,93 +190,93 @@
 
 
 
-        <div *class*="pesquisa-box">
+        <div class="pesquisa-box">
 
-            <div *class*="pesquisa-barra-principal">
+            <div class="pesquisa-barra-principal">
 
-                <i *class*="bx bx-search"></i>
+                <i class="bx bx-search"></i>
 
-                <input *type*="text" *id*="pesquisaTexto" *placeholder*="Digite o título do livro ou nome do autor...">
+                <input type="text" id="pesquisaTexto" placeholder="Digite o título do livro ou nome do autor...">
 
-                <button *type*="button" *id*="btnLimparPesquisa" *class*="btn-limpar-pesquisa">Limpar Filtros</button>
-
-            </div>
-
-
-
-            <div *class*="pesquisa-filtros-grid">
-
-                <div *class*="input-group">
-
-                    <label *for*="filtroCategoria">Categoria</label>
-
-                    <select *id*="filtroCategoria">
-
-                        <option *value*="todas">Todas as Categorias</option>
-
-                        <option *value*="Ficção">Ficção</option>
-
-                        <option *value*="Tecnologia">Tecnologia</option>
-
-                        <option *value*="História">História</option>
-
-                        <option *value*="Ciências">Ciências</option>
-
-                        <option *value*="Negócios">Negócios</option>
-
-                    </select>
-
-                </div>
-
-
-
-                <div *class*="input-group">
-
-                    <label *for*="filtroStatus">Disponibilidade</label>
-
-                    <select *id*="filtroStatus">
-
-                        <option *value*="todos">Todos os Status</option>
-
-                        <option *value*="disponivel">Disponível em Estoque</option>
-
-                        <option *value*="emprestado">Com Unidades Emprestadas</option>
-
-                        <option *value*="esgotado">Esgotados (Estoque 0)</option>
-
-                    </select>
-
-                </div>
-
-
-
-                <div *class*="input-group">
-
-                    <label *for*="filtroOrdenacao">Ordenar por</label>
-
-                    <select *id*="filtroOrdenacao">
-
-                        <option *value*="recentes">Mais Recentes</option>
-
-                        <option *value*="az">Título (A - Z)</option>
-
-                        <option *value*="menor-preco">Menor Preço</option>
-
-                        <option *value*="maior-preco">Maior Preço</option>
-
-                        <option *value*="maior-estoque">Maior Estoque</option>
-
-                    </select>
-
-                </div>
+                <button type="button" id="btnLimparPesquisa" class="btn-limpar-pesquisa">Limpar Filtros</button>
 
             </div>
 
 
 
-            <div *class*="pesquisa-status-bar">
+            <div class="pesquisa-filtros-grid">
 
-                <span *id*="contadorResultados">Mostrando 0 livros</span>
+                <div class="input-group">
+
+                    <label for="filtroCategoria">Categoria</label>
+
+                    <select id="filtroCategoria">
+
+                        <option value="todas">Todas as Categorias</option>
+
+                        <option value="Ficção">Ficção</option>
+
+                        <option value="Tecnologia">Tecnologia</option>
+
+                        <option value="História">História</option>
+
+                        <option value="Ciências">Ciências</option>
+
+                        <option value="Negócios">Negócios</option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="input-group">
+
+                    <label for="filtroStatus">Disponibilidade</label>
+
+                    <select id="filtroStatus">
+
+                        <option value="todos">Todos os Status</option>
+
+                        <option value="disponivel">Disponível em Estoque</option>
+
+                        <option value="emprestado">Com Unidades Emprestadas</option>
+
+                        <option value="esgotado">Esgotados (Estoque 0)</option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="input-group">
+
+                    <label for="filtroOrdenacao">Ordenar por</label>
+
+                    <select id="filtroOrdenacao">
+
+                        <option value="recentes">Mais Recentes</option>
+
+                        <option value="az">Título (A - Z)</option>
+
+                        <option value="menor-preco">Menor Preço</option>
+
+                        <option value="maior-preco">Maior Preço</option>
+
+                        <option value="maior-estoque">Maior Estoque</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="pesquisa-status-bar">
+
+                <span id="contadorResultados">Mostrando 0 livros</span>
 
             </div>
 
@@ -286,7 +286,7 @@
 
         <!-- Resultados da Pesquisa -->
 
-        <div *id*="resultadosPesquisa" *class*="livros-grid"></div>
+        <div id="resultadosPesquisa" class="livros-grid"></div>
 
     </section>
 
@@ -294,9 +294,9 @@
 
     <!-- Seção de Gerenciamento (Cadastrar, Editar, Emprestar, Comprar, Excluir) -->
 
-    <section *class*="catalogo-section" *id*="catalogo">
+    <section class="catalogo-section" id="catalogo">
 
-        <div *class*="cat-header">
+        <div class="cat-header">
 
             <h2>Acervo & Gerenciamento</h2>
 
@@ -308,35 +308,35 @@
 
         <!-- Painel de Resumo -->
 
-        <div *class*="resumo-painel">
+        <div class="resumo-painel">
 
-            <div *class*="card-resumo">
+            <div class="card-resumo">
 
-                <span *id*="totalLivros">0</span>
+                <span id="totalLivros">0</span>
 
                 <p>Títulos Cadastrados</p>
 
             </div>
 
-            <div *class*="card-resumo">
+            <div class="card-resumo">
 
-                <span *id*="totalDisponiveis">0</span>
+                <span id="totalDisponiveis">0</span>
 
                 <p>Unidades Disponíveis</p>
 
             </div>
 
-            <div *class*="card-resumo">
+            <div class="card-resumo">
 
-                <span *id*="totalEmprestados">0</span>
+                <span id="totalEmprestados">0</span>
 
                 <p>Emprestados</p>
 
             </div>
 
-            <div *class*="card-resumo">
+            <div class="card-resumo">
 
-                <span *id*="totalVendidos">0</span>
+                <span id="totalVendidos">0</span>
 
                 <p>Vendidos</p>
 
@@ -348,53 +348,53 @@
 
         <!-- Formulário de Cadastro / Edição -->
 
-        <div *class*="form-container">
+        <div class="form-container">
 
-            <h3 *id*="formTitulo">Cadastrar Novo Livro</h3>
+            <h3 id="formTitulo">Cadastrar Novo Livro</h3>
 
-            <form *id*="livroForm">
+            <form id="livroForm">
 
-                <input *type*="hidden" *id*="livroId">
-
-
-
-                <div *class*="form-grid">
-
-                    <div *class*="input-group">
-
-                        <label *for*="titulo">Título do Livro \*</label>
-
-                        <input *type*="text" *id*="titulo" *placeholder*="Ex: Dom Casmurro" *required*>
-
-                    </div>
+                <input type="hidden" id="livroId">
 
 
 
-                    <div *class*="input-group">
+                <div class="form-grid">
 
-                        <label *for*="autor">Autor \*</label>
+                    <div class="input-group">
 
-                        <input *type*="text" *id*="autor" *placeholder*="Ex: Machado de Assis" *required*>
+                        <label for="titulo">Título do Livro \*</label>
+
+                        <input type="text" id="titulo" placeholder="Ex: Dom Casmurro" *required*>
 
                     </div>
 
 
 
-                    <div *class*="input-group">
+                    <div class="input-group">
 
-                        <label *for*="categoria">Categoria</label>
+                        <label for="autor">Autor \*</label>
 
-                        <select *id*="categoria">
+                        <input type="text" id="autor" placeholder="Ex: Machado de Assis" *required*>
 
-                            <option *value*="Ficção">Ficção</option>
+                    </div>
 
-                            <option *value*="Tecnologia">Tecnologia</option>
 
-                            <option *value*="História">História</option>
 
-                            <option *value*="Ciências">Ciências</option>
+                    <div class="input-group">
 
-                            <option *value*="Negócios">Negócios</option>
+                        <label for="categoria">Categoria</label>
+
+                        <select id="categoria">
+
+                            <option value="Ficção">Ficção</option>
+
+                            <option value="Tecnologia">Tecnologia</option>
+
+                            <option value="História">História</option>
+
+                            <option value="Ciências">Ciências</option>
+
+                            <option value="Negócios">Negócios</option>
 
                         </select>
 
@@ -402,21 +402,21 @@
 
 
 
-                    <div *class*="input-group">
+                    <div class="input-group">
 
-                        <label *for*="preco">Preço de Venda (R$) \*</label>
+                        <label for="preco">Preço de Venda (R$) \*</label>
 
-                        <input *type*="number" *id*="preco" *step*="0.01" *min*="0" *placeholder*="49.90" *required*>
+                        <input type="number" id="preco" step="0.01" min="0" placeholder="49.90" *required*>
 
                     </div>
 
 
 
-                    <div *class*="input-group">
+                    <div class="input-group">
 
-                        <label *for*="estoque">Quantidade em Estoque \*</label>
+                        <label for="estoque">Quantidade em Estoque \*</label>
 
-                        <input *type*="number" *id*="estoque" *min*="0" *placeholder*="5" *required*>
+                        <input type="number" id="estoque" min="0" placeholder="5" *required*>
 
                     </div>
 
@@ -424,11 +424,11 @@
 
 
 
-                <div *class*="form-actions">
+                <div class="form-actions">
 
-                    <button *type*="submit" *class*="btn-salvar" *id*="btnSalvar">Cadastrar Livro</button>
+                    <button type="submit" class="btn-salvar" id="btnSalvar">Cadastrar Livro</button>
 
-                    <button *type*="button" *class*="btn-cancelar" *id*="btnCancelar" *style*="display: none;">Cancelar Edição</button>
+                    <button type="button" class="btn-cancelar" id="btnCancelar" style="display: none;">Cancelar Edição</button>
 
                 </div>
 
@@ -440,7 +440,7 @@
 
         <!-- Lista Completa do Acervo -->
 
-        <div *id*="listaLivros" *class*="livros-grid"></div>
+        <div id="listaLivros" class="livros-grid"></div>
 
     </section>
 
@@ -448,7 +448,7 @@
 
     <!-- Arquivo JavaScript -->
 
-    <script *src*="./script.js"></script>
+    <script src="./script.js"></script>
 
 </body>
 
