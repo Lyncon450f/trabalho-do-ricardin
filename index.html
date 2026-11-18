@@ -1,1 +1,455 @@
 <!DOCTYPE html>
+
+<html *lang*="pt-br">
+
+<head>
+
+    <meta *charset*="UTF-8">
+
+    <meta *http-equiv*="X-UA-Compatible" *content*="IE=edge">
+
+    <meta *name*="viewport" *content*="width=device-width, initial-scale=1.0">
+
+    <title>Biblioteca On-line</title>
+
+    <!-- Google Fonts: Poppins -->
+
+    <link *href*="https\://fonts.googleapis.com/css2?family=Poppins:wght\@300;400;500;600;700&display=swap" *rel*="stylesheet">
+
+    <!-- Boxicons CDN -->
+
+    <link *rel*="stylesheet" *href*="https\://unpkg.com/boxicons\@latest/css/boxicons.min.css">
+
+    <!-- CSS Customizado -->
+
+    <link *rel*="stylesheet" *href*="./style.css">
+
+</head>
+
+<body>
+
+    <header *id*="inicio">
+
+        <nav *class*="navbar">
+
+            <div *class*="logo">
+
+                <h2>Biblioteca On-line</h2>
+
+            </div>
+
+
+
+            <div *class*="navmenu">
+
+                <ul>        
+
+                    <li><a *href*="#inicio">Início</a></li>
+
+                    <li><a *href*="#categorias">Categorias</a></li>
+
+                    <li><a *href*="#pesquisa" *class*="nav-destaque"><i *class*="bx bx-search"></i> Pesquisar</a></li>
+
+                    <li><a *href*="#catalogo">Gerenciar Livros</a></li>
+
+                </ul>
+
+
+
+                <div *class*="campo-de-busca">
+
+                    <input *type*="search" *id*="inputBuscaTopo" *class*="procurar" *placeholder*="Busca rápida...">
+
+                    <i *class*="bx bx-search" *id*="btnBuscaTopo"></i>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+
+        <div *class*="main-header">
+
+            <div *class*="header">
+
+                <h5>Biblioteca On-line</h5>
+
+                <h2>Para todas as suas necessidades de leitura</h2>
+
+                <p>Gerencie seu acervo, pesquise títulos com filtros avançados, controle empréstimos e realize vendas em um só lugar.</p>
+
+                <div *class*="hero-btns">
+
+                    <a *href*="#pesquisa" *class*="btn">Pesquisar no Acervo</a>
+
+                    <a *href*="#catalogo" *class*="btn btn-outline">Cadastrar Livro</a>
+
+                </div>
+
+            </div>
+
+
+
+            <img *src*="./images/slider-img.png" *alt*="Ilustração principal da biblioteca">
+
+        </div>
+
+    </header>
+
+
+
+    <!-- Seção de Categorias -->
+
+    <section *class*="categories" *id*="categorias">
+
+        <div *class*="cat-row">
+
+            <div *class*="cat-header">
+
+                <h2>Categorias de Livros</h2>
+
+                <p>Clique em uma categoria para filtrar automaticamente na aba de pesquisa.</p>
+
+            </div>
+
+
+
+            <div *class*="cat-books">
+
+                <div *class*="books cat-clicavel" *onclick*="filtrarPorCategoria('Ficção')">
+
+                    <div *class*="book-img"><img *src*="./images/cat1.png" *alt*="Ficção"></div>
+
+                    <h4>Ficção</h4>
+
+                    <p>Romances e aventuras</p>
+
+                </div>
+
+                <div *class*="books cat-clicavel" *onclick*="filtrarPorCategoria('Tecnologia')">
+
+                    <div *class*="book-img"><img *src*="./images/cat2.png" *alt*="Tecnologia"></div>
+
+                    <h4>Tecnologia</h4>
+
+                    <p>Programação e dados</p>
+
+                </div>
+
+                <div *class*="books cat-clicavel" *onclick*="filtrarPorCategoria('História')">
+
+                    <div *class*="book-img"><img *src*="./images/cat3.png" *alt*="História"></div>
+
+                    <h4>História</h4>
+
+                    <p>Civilizações e biografias</p>
+
+                </div>
+
+                <div *class*="books cat-clicavel" *onclick*="filtrarPorCategoria('Ciências')">
+
+                    <div *class*="book-img"><img *src*="./images/cat4.png" *alt*="Ciências"></div>
+
+                    <h4>Ciências</h4>
+
+                    <p>Física, química e biologia</p>
+
+                </div>
+
+                <div *class*="books cat-clicavel" *onclick*="filtrarPorCategoria('Negócios')">
+
+                    <div *class*="book-img"><img *src*="./images/cat5.png" *alt*="Negócios"></div>
+
+                    <h4>Negócios</h4>
+
+                    <p>Gestão e finanças</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ABA EXCLUSIVA DE PESQUISA AVANÇADA -->
+
+    <section *class*="pesquisa-section" *id*="pesquisa">
+
+        <div *class*="cat-header">
+
+            <h2>Pesquisa Avançada no Acervo</h2>
+
+            <p>Encontre livros por título, autor, categoria, disponibilidade ou faixa de preço.</p>
+
+        </div>
+
+
+
+        <div *class*="pesquisa-box">
+
+            <div *class*="pesquisa-barra-principal">
+
+                <i *class*="bx bx-search"></i>
+
+                <input *type*="text" *id*="pesquisaTexto" *placeholder*="Digite o título do livro ou nome do autor...">
+
+                <button *type*="button" *id*="btnLimparPesquisa" *class*="btn-limpar-pesquisa">Limpar Filtros</button>
+
+            </div>
+
+
+
+            <div *class*="pesquisa-filtros-grid">
+
+                <div *class*="input-group">
+
+                    <label *for*="filtroCategoria">Categoria</label>
+
+                    <select *id*="filtroCategoria">
+
+                        <option *value*="todas">Todas as Categorias</option>
+
+                        <option *value*="Ficção">Ficção</option>
+
+                        <option *value*="Tecnologia">Tecnologia</option>
+
+                        <option *value*="História">História</option>
+
+                        <option *value*="Ciências">Ciências</option>
+
+                        <option *value*="Negócios">Negócios</option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div *class*="input-group">
+
+                    <label *for*="filtroStatus">Disponibilidade</label>
+
+                    <select *id*="filtroStatus">
+
+                        <option *value*="todos">Todos os Status</option>
+
+                        <option *value*="disponivel">Disponível em Estoque</option>
+
+                        <option *value*="emprestado">Com Unidades Emprestadas</option>
+
+                        <option *value*="esgotado">Esgotados (Estoque 0)</option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div *class*="input-group">
+
+                    <label *for*="filtroOrdenacao">Ordenar por</label>
+
+                    <select *id*="filtroOrdenacao">
+
+                        <option *value*="recentes">Mais Recentes</option>
+
+                        <option *value*="az">Título (A - Z)</option>
+
+                        <option *value*="menor-preco">Menor Preço</option>
+
+                        <option *value*="maior-preco">Maior Preço</option>
+
+                        <option *value*="maior-estoque">Maior Estoque</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <div *class*="pesquisa-status-bar">
+
+                <span *id*="contadorResultados">Mostrando 0 livros</span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Resultados da Pesquisa -->
+
+        <div *id*="resultadosPesquisa" *class*="livros-grid"></div>
+
+    </section>
+
+
+
+    <!-- Seção de Gerenciamento (Cadastrar, Editar, Emprestar, Comprar, Excluir) -->
+
+    <section *class*="catalogo-section" *id*="catalogo">
+
+        <div *class*="cat-header">
+
+            <h2>Acervo & Gerenciamento</h2>
+
+            <p>Cadastre novos livros ou edite as informações do catálogo completo.</p>
+
+        </div>
+
+
+
+        <!-- Painel de Resumo -->
+
+        <div *class*="resumo-painel">
+
+            <div *class*="card-resumo">
+
+                <span *id*="totalLivros">0</span>
+
+                <p>Títulos Cadastrados</p>
+
+            </div>
+
+            <div *class*="card-resumo">
+
+                <span *id*="totalDisponiveis">0</span>
+
+                <p>Unidades Disponíveis</p>
+
+            </div>
+
+            <div *class*="card-resumo">
+
+                <span *id*="totalEmprestados">0</span>
+
+                <p>Emprestados</p>
+
+            </div>
+
+            <div *class*="card-resumo">
+
+                <span *id*="totalVendidos">0</span>
+
+                <p>Vendidos</p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Formulário de Cadastro / Edição -->
+
+        <div *class*="form-container">
+
+            <h3 *id*="formTitulo">Cadastrar Novo Livro</h3>
+
+            <form *id*="livroForm">
+
+                <input *type*="hidden" *id*="livroId">
+
+
+
+                <div *class*="form-grid">
+
+                    <div *class*="input-group">
+
+                        <label *for*="titulo">Título do Livro \*</label>
+
+                        <input *type*="text" *id*="titulo" *placeholder*="Ex: Dom Casmurro" *required*>
+
+                    </div>
+
+
+
+                    <div *class*="input-group">
+
+                        <label *for*="autor">Autor \*</label>
+
+                        <input *type*="text" *id*="autor" *placeholder*="Ex: Machado de Assis" *required*>
+
+                    </div>
+
+
+
+                    <div *class*="input-group">
+
+                        <label *for*="categoria">Categoria</label>
+
+                        <select *id*="categoria">
+
+                            <option *value*="Ficção">Ficção</option>
+
+                            <option *value*="Tecnologia">Tecnologia</option>
+
+                            <option *value*="História">História</option>
+
+                            <option *value*="Ciências">Ciências</option>
+
+                            <option *value*="Negócios">Negócios</option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <div *class*="input-group">
+
+                        <label *for*="preco">Preço de Venda (R$) \*</label>
+
+                        <input *type*="number" *id*="preco" *step*="0.01" *min*="0" *placeholder*="49.90" *required*>
+
+                    </div>
+
+
+
+                    <div *class*="input-group">
+
+                        <label *for*="estoque">Quantidade em Estoque \*</label>
+
+                        <input *type*="number" *id*="estoque" *min*="0" *placeholder*="5" *required*>
+
+                    </div>
+
+                </div>
+
+
+
+                <div *class*="form-actions">
+
+                    <button *type*="submit" *class*="btn-salvar" *id*="btnSalvar">Cadastrar Livro</button>
+
+                    <button *type*="button" *class*="btn-cancelar" *id*="btnCancelar" *style*="display: none;">Cancelar Edição</button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+
+        <!-- Lista Completa do Acervo -->
+
+        <div *id*="listaLivros" *class*="livros-grid"></div>
+
+    </section>
+
+
+
+    <!-- Arquivo JavaScript -->
+
+    <script *src*="./script.js"></script>
+
+</body>
+
+</html>
