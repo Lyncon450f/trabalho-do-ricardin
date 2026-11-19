@@ -1085,3 +1085,20 @@ header {
 @media (max-width: 600px) {
     .capa-livro { height: 155px; padding: 8px; }
 }
+
+
+.btn-apagar-acervo {
+    margin-top: 18px;
+    padding: 11px 16px;
+    border: 1px solid #a83b35;
+    border-radius: 4px;
+    background: #fff;
+    color: #9b302b;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+}
+.btn-apagar-acervo:hover { background: #9b302b; color: #fff; }
+.btn-apagar-acervo:disabled { opacity: .6; cursor: wait; }
