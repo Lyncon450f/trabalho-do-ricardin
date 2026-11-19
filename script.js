@@ -1,3 +1,24 @@
+/* Notificações internas do site (não usa notificações do Chrome) */
+function notificarSite(mensagem, tipo = 'sucesso') {
+    let area = document.getElementById('notificacoesSite');
+    if (!area) {
+        area = document.createElement('div');
+        area.id = 'notificacoesSite';
+        area.className = 'notificacoes-site';
+        area.setAttribute('aria-live', 'polite');
+        area.setAttribute('aria-atomic', 'true');
+        document.body.appendChild(area);
+    }
+    const aviso = document.createElement('div');
+    aviso.className = 'aviso-site aviso-' + tipo;
+    aviso.textContent = mensagem;
+    area.appendChild(aviso);
+    requestAnimationFrame(() => aviso.classList.add('visivel'));
+    window.setTimeout(() => {
+        aviso.classList.remove('visivel');
+        window.setTimeout(() => aviso.remove(), 300);
+    }, 4000);
+}
 // Estado inicial com livros de exemplo
 
 const livrosIniciais = [
@@ -564,7 +585,7 @@ livroForm.addEventListener('submit', async function (e) {
     if (!dadosLivro.titulo || !dadosLivro.autor ||
         !Number.isFinite(dadosLivro.preco) || dadosLivro.preco < 0 ||
         !Number.isInteger(dadosLivro.estoque) || dadosLivro.estoque < 0) {
-        alert('Preencha os campos corretamente antes de cadastrar.');
+        notificarSite('Preencha os campos corretamente antes de cadastrar.', 'erro');
         return;
     }
 
@@ -593,7 +614,7 @@ livroForm.addEventListener('submit', async function (e) {
                 emprestados: Number(livroSalvo.emprestados),
                 vendidos: Number(livroSalvo.vendidos)
             };
-            alert('Livro atualizado com sucesso!');
+            notificarSite('Livro atualizado com sucesso!');
         } else {
             const { data, error } = await supabaseClient
                 .from('livros')
@@ -610,7 +631,7 @@ livroForm.addEventListener('submit', async function (e) {
                 emprestados: Number(livroSalvo.emprestados),
                 vendidos: Number(livroSalvo.vendidos)
             });
-            alert('Livro cadastrado com sucesso!');
+            notificarSite('Livro cadastrado com sucesso!');
         }
 
         localStorage.setItem('biblioteca_livros', JSON.stringify(livros));
@@ -618,7 +639,7 @@ livroForm.addEventListener('submit', async function (e) {
         atualizarTudo();
     } catch (error) {
         console.error('Erro ao salvar livro:', error);
-        alert('Não foi possível salvar o livro. Confira a conexão e as permissões da tabela livros no Supabase. Detalhe: ' + error.message);
+        notificarSite('Não foi possível salvar: ' + error.message, 'erro');
     } finally {
         btnSalvar.disabled = false;
         btnSalvar.textContent = livroIdInput.value ? 'Salvar Alterações' : 'Cadastrar Livro';
@@ -711,7 +732,7 @@ function emprestarLivro(id) {
 
     atualizarTudo();
 
-    alert(`Empréstimo registrado para ${leitor.trim()}!`);
+    notificarSite(`Empréstimo registrado para ${leitor.trim()}!`);
 
 }
 
@@ -737,7 +758,7 @@ function devolverLivro(id) {
 
     atualizarTudo();
 
-    alert(`Devolução de "${livro.titulo}" registrada com sucesso!`);
+    notificarSite(`Devolução de "${livro.titulo}" registrada com sucesso!`);
 
 }
 
@@ -769,7 +790,7 @@ function comprarLivro(id) {
 
     atualizarTudo();
 
-    alert(`Compra realizada! Obrigado por adquirir "${livro.titulo}".`);
+    notificarSite(`Compra realizada! Obrigado por adquirir "${livro.titulo}".`);
 
 }
 
@@ -790,7 +811,7 @@ async function excluirLivro(id) {
         const { error } = await supabaseClient.from('livros').delete().eq('id', id);
         if (error) {
             console.error('Erro ao excluir no Supabase:', error);
-            alert('Não foi possível excluir o livro do banco de dados.');
+            notificarSite('Não foi possível excluir o livro do banco de dados.', 'erro');
             return;
         }
         livros = livros.filter(l => l.id !== id);
@@ -812,7 +833,7 @@ async function excluirLivro(id) {
         atualizarTudo();
     } catch (error) {
         console.error('Erro ao conectar ao Supabase:', error);
-        alert('Erro ao conectar ao Supabase: ' + error.message + '\\nConfira a URL, a chave pública e execute novamente o SQL atualizado do projeto.');
+        notificarSite('Erro ao conectar ao banco: ' + error.message, 'erro');
         atualizarTudo();
     }
 })();
