@@ -724,43 +724,6 @@ async function excluirLivro(id) {
 
 
 
-// Apaga todos os livros do Supabase e sincroniza a tela.
-btnApagarAcervo.addEventListener('click', async () => {
-    if (livros.length === 0) {
-        notificarSite('O acervo já está vazio.', 'erro');
-        return;
-    }
-
-    const confirmar = confirm(
-        `ATENÇÃO: isso apagará permanentemente os ${livros.length} livros do acervo compartilhado no banco de dados. Deseja continuar?`
-    );
-    if (!confirmar) return;
-
-    btnApagarAcervo.disabled = true;
-    btnApagarAcervo.textContent = 'Apagando...';
-
-    try {
-        const { error } = await supabaseClient
-            .from('livros')
-            .delete()
-            .not('id', 'is', null);
-
-        if (error) throw error;
-
-        livros = [];
-        localStorage.setItem('biblioteca_livros', JSON.stringify(livros));
-        resetarFormulario();
-        atualizarTudo();
-        notificarSite('Todos os livros foram apagados do banco de dados.');
-    } catch (error) {
-        console.error('Erro ao apagar o acervo:', error);
-        notificarSite('Não foi possível apagar o acervo: ' + error.message, 'erro');
-    } finally {
-        btnApagarAcervo.disabled = false;
-        btnApagarAcervo.innerHTML = '<i class="bx bx-trash"></i> Apagar todos os livros';
-    }
-});
-
 // Inicializa a aplicação carregando os dados compartilhados do Supabase.
 (async function iniciarAplicacao() {
     try {
