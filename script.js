@@ -213,7 +213,7 @@ async function salvarDados() {
 
     if (error) {
         console.error('Erro ao salvar no Supabase:', error);
-        alert('Não foi possível salvar no banco de dados. Confira a configuração e as permissões do Supabase.');
+        alert('Erro ao salvar no Supabase: ' + error.message + '\\nVerifique as permissões da tabela public.livros e a chave pública.');
     }
 }
 
@@ -812,7 +812,7 @@ async function excluirLivro(id) {
         atualizarTudo();
     } catch (error) {
         console.error('Erro ao conectar ao Supabase:', error);
-        alert('Não foi possível carregar os livros do banco. Verifique se executou supabase/schema.sql no SQL Editor do Supabase e confira a configuração.');
+        alert('Erro ao conectar ao Supabase: ' + error.message + '\\nConfira a URL, a chave pública e execute novamente o SQL atualizado do projeto.');
         atualizarTudo();
     }
 })();
