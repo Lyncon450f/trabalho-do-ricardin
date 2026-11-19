@@ -1067,3 +1067,21 @@ header {
 @media (max-width: 390px) {
     .livros-grid { grid-template-columns: 1fr; }
 }
+
+
+/* Capas dos livros reais no catálogo */
+.livro-card > div:first-child::before { display: none !important; }
+.capa-livro {
+    display: block;
+    width: 100%;
+    height: 190px;
+    object-fit: contain;
+    object-position: center;
+    padding: 12px;
+    margin: 0 0 12px;
+    background: #f1f4ef;
+    border-radius: 3px;
+}
+@media (max-width: 600px) {
+    .capa-livro { height: 155px; padding: 8px; }
+}
