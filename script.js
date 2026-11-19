@@ -42,6 +42,30 @@ const capasPorTitulo = {
     "Código Limpo (Clean Code)": "9780132350884"
 };
 
+// ISBNs usados para carregar as capas das edições correspondentes.
+Object.assign(capasPorTitulo, {
+    "1984": "9788535914849",
+    "A cabeça do santo": "9788535923698",
+    "Torto Arado": "9788535932691",
+    "A hora da estrela": "9788532508126",
+    "Vidas Secas": "9788501114785",
+    "O diário de uma princesa desastrada": "9786559571803",
+    "O diário de uma princesa desastrada 2": "9786559572503",
+    "Diário de um Banana": "9788576831303",
+    "Extraordinário": "9788580573015",
+    "Percy Jackson e o Ladrão de Raios": "9788580575397",
+    "Coraline": "9788551006642",
+    "Anne de Green Gables": "9786555520080",
+    "A garota que bebeu a lua": "9788579803262",
+    "A psicologia financeira": "9788539004119",
+    "Hábitos Atômicos": "9788550807560",
+    "Sapiens: Uma Breve História da Humanidade": "9788525432186",
+    "O guia do mochileiro das galáxias": "9788599296945",
+    "O Pequeno Príncipe": "9788522031445",
+    "O Hobbit": "9788595084742",
+    "Harry Potter e a Pedra Filosofal": "9788532511010"
+});
+
 function obterCapaLivro(livro) {
     const isbn = capasPorTitulo[livro.titulo];
     return isbn ? `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg` : "";
@@ -105,6 +129,14 @@ const btnCancelar = document.getElementById('btnCancelar');
 const listaLivrosEl = document.getElementById('listaLivros');
 
 const btnApagarAcervo = document.getElementById('btnApagarAcervo');
+
+// Atalho para preencher o catálogo com uma seleção de livros em destaque.
+const btnAdicionarPopulares = document.createElement('button');
+btnAdicionarPopulares.type = 'button';
+btnAdicionarPopulares.className = 'btn-salvar';
+btnAdicionarPopulares.textContent = 'Adicionar 20 livros em alta';
+btnAdicionarPopulares.style.marginRight = '10px';
+btnApagarAcervo.parentNode.insertBefore(btnAdicionarPopulares, btnApagarAcervo);
 
 
 
@@ -735,6 +767,225 @@ btnApagarAcervo.addEventListener('click', async () => {
     } finally {
         btnApagarAcervo.disabled = false;
         btnApagarAcervo.innerHTML = '<i class="bx bx-trash"></i> Apagar todos os livros';
+    }
+});
+
+const livrosEmAlta = [
+    {
+        "titulo": "A cabeça do santo",
+        "autor": "Socorro Acioli",
+        "categoria": "Ficção",
+        "preco": 49.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "Torto Arado",
+        "autor": "Itamar Vieira Junior",
+        "categoria": "Ficção",
+        "preco": 59.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "A hora da estrela",
+        "autor": "Clarice Lispector",
+        "categoria": "Ficção",
+        "preco": 39.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "Vidas Secas",
+        "autor": "Graciliano Ramos",
+        "categoria": "Ficção",
+        "preco": 34.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "O diário de uma princesa desastrada",
+        "autor": "Maidy Lacerda",
+        "categoria": "Ficção",
+        "preco": 44.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "O diário de uma princesa desastrada 2",
+        "autor": "Maidy Lacerda",
+        "categoria": "Ficção",
+        "preco": 44.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "Diário de um Banana",
+        "autor": "Jeff Kinney",
+        "categoria": "Ficção",
+        "preco": 39.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "Extraordinário",
+        "autor": "R. J. Palacio",
+        "categoria": "Ficção",
+        "preco": 42.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "Harry Potter e a Pedra Filosofal",
+        "autor": "J. K. Rowling",
+        "categoria": "Ficção",
+        "preco": 49.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "Percy Jackson e o Ladrão de Raios",
+        "autor": "Rick Riordan",
+        "categoria": "Ficção",
+        "preco": 49.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "O Hobbit",
+        "autor": "J. R. R. Tolkien",
+        "categoria": "Ficção",
+        "preco": 44.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "Coraline",
+        "autor": "Neil Gaiman",
+        "categoria": "Ficção",
+        "preco": 39.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "Anne de Green Gables",
+        "autor": "L. M. Montgomery",
+        "categoria": "Ficção",
+        "preco": 39.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "A garota que bebeu a lua",
+        "autor": "Kelly Barnhill",
+        "categoria": "Ficção",
+        "preco": 44.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "O Pequeno Príncipe",
+        "autor": "Antoine de Saint-Exupéry",
+        "categoria": "Ficção",
+        "preco": 29.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "1984",
+        "autor": "George Orwell",
+        "categoria": "Ficção",
+        "preco": 39.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "A psicologia financeira",
+        "autor": "Morgan Housel",
+        "categoria": "Negócios",
+        "preco": 49.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "Hábitos Atômicos",
+        "autor": "James Clear",
+        "categoria": "Negócios",
+        "preco": 59.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "Sapiens: Uma Breve História da Humanidade",
+        "autor": "Yuval Noah Harari",
+        "categoria": "História",
+        "preco": 59.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    },
+    {
+        "titulo": "O guia do mochileiro das galáxias",
+        "autor": "Douglas Adams",
+        "categoria": "Ficção",
+        "preco": 44.9,
+        "estoque": 4,
+        "emprestados": 0,
+        "vendidos": 0
+    }
+];
+
+btnAdicionarPopulares.addEventListener('click', async () => {
+    const titulosExistentes = new Set(livros.map(l => l.titulo.toLocaleLowerCase('pt-BR')));
+    const novosLivros = livrosEmAlta.filter(l => !titulosExistentes.has(l.titulo.toLocaleLowerCase('pt-BR')));
+    if (novosLivros.length === 0) {
+        notificarSite('Os 20 livros desta seleção já estão no acervo.');
+        return;
+    }
+    const confirmar = confirm(`Serão adicionados ${novosLivros.length} livros ao catálogo compartilhado. Deseja continuar?`);
+    if (!confirmar) return;
+    btnAdicionarPopulares.disabled = true;
+    btnAdicionarPopulares.textContent = 'Adicionando...';
+    try {
+        const { data, error } = await supabaseClient
+            .from('livros')
+            .insert(novosLivros)
+            .select();
+        if (error) throw error;
+        livros.push(...data.map(l => ({
+            ...l,
+            preco: Number(l.preco),
+            estoque: Number(l.estoque),
+            emprestados: Number(l.emprestados),
+            vendidos: Number(l.vendidos)
+        })));
+        localStorage.setItem('biblioteca_livros', JSON.stringify(livros));
+        atualizarTudo();
+        notificarSite(`${data.length} livros adicionados ao acervo com sucesso!`);
+    } catch (error) {
+        console.error('Erro ao adicionar livros em alta:', error);
+        notificarSite('Não foi possível adicionar os livros: ' + error.message, 'erro');
+    } finally {
+        btnAdicionarPopulares.disabled = false;
+        btnAdicionarPopulares.textContent = 'Adicionar 20 livros em alta';
     }
 });
 
