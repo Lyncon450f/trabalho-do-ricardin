@@ -69,26 +69,8 @@ async function carregarLivrosDoBanco() {
             vendidos: Number(l.vendidos)
         }));
     } else {
-        // Se o navegador já registrou um acervo vazio, respeita a escolha do usuário.
-        // Só inclui os livros iniciais na primeira visita, quando ainda não há estado local.
-        const acervoLocal = localStorage.getItem('biblioteca_livros');
-        if (acervoLocal === null && livrosIniciais.length > 0) {
-            const { data: inseridos, error: erroInsert } = await supabaseClient
-                .from('livros')
-                .insert(livrosIniciais)
-                .select();
-
-            if (erroInsert) throw erroInsert;
-            livros = inseridos.map(l => ({
-                ...l,
-                preco: Number(l.preco),
-                estoque: Number(l.estoque),
-                emprestados: Number(l.emprestados),
-                vendidos: Number(l.vendidos)
-            }));
-        } else {
-            livros = [];
-        }
+        // Banco vazio permanece vazio; evita recriar livros após o usuário apagar o acervo.
+        livros = [];
     }
 
     localStorage.setItem('biblioteca_livros', JSON.stringify(livros));
