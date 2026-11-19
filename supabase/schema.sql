@@ -34,3 +34,10 @@ on public.livros for update to anon using (true) with check (true);
 drop policy if exists "Acesso publico para excluir livros" on public.livros;
 create policy "Acesso publico para excluir livros"
 on public.livros for delete to anon using (true);
+
+
+-- Permissões SQL para o cliente público do site.
+-- As políticas RLS acima continuam controlando quais linhas podem ser acessadas.
+grant usage on schema public to anon;
+grant select, insert, update, delete on table public.livros to anon;
+grant usage, select on sequence public.livros_id_seq to anon;
