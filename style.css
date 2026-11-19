@@ -1293,3 +1293,9 @@ body[data-page="inicio"] .campo-de-busca { display: none; }
 @media (max-width: 700px) {
   .navmenu ul { justify-content: center; }
 }
+
+/* Ajustes das páginas internas */
+body[data-page]:not([data-page="inicio"]) header { min-height: 0; }
+body[data-page]:not([data-page="pesquisa"]) .campo-de-busca { display: none !important; }
+body[data-page="pesquisa"] .catalogo-section,
+body[data-page="pesquisa"] .categories { display: none !important; }
