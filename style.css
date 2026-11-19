@@ -1102,3 +1102,138 @@ header {
 }
 .btn-apagar-acervo:hover { background: #9b302b; color: #fff; }
 .btn-apagar-acervo:disabled { opacity: .6; cursor: wait; }
+
+
+/* ===== REDESIGN 2026: identidade editorial da Biblioteca On-line ===== */
+:root {
+  --verde-noite: #092b20;
+  --verde-profundo: #104b35;
+  --verde: #238451;
+  --verde-claro: #e8f1e9;
+  --papel: #f7f7f1;
+  --tinta: #17251d;
+  --muted: #68756d;
+  --linha: #e2e8e1;
+}
+html { scroll-padding-top: 88px; }
+body { background: var(--papel); color: var(--tinta); }
+.navbar {
+  height: 76px; padding: 0 clamp(20px, 6vw, 88px);
+  background: var(--verde-noite); box-shadow: 0 8px 28px rgba(5,28,18,.13);
+}
+.navbar h2 { font-size: 21px; font-weight: 700; letter-spacing: -.6px; }
+.navbar h2::before { content: "▤"; color: #9bd0a8; margin-right: 10px; }
+.navmenu { gap: 16px; }
+.navmenu li a { font-size: 13px; padding: 9px 12px; }
+.navmenu li a:hover { color: #bce6c5; }
+.navmenu li a.nav-destaque { background: #267d4e; border-radius: 7px; }
+.campo-de-busca .procurar { width: 190px; border-radius: 7px; background: #f5f7f3; }
+.campo-de-busca i { right: 4px; border-radius: 5px; background: #267d4e; }
+header { min-height: auto; background: var(--verde-noite); }
+.main-header {
+  width: min(1120px, 88%); min-height: 510px; padding: 72px 0 82px;
+  gap: clamp(35px, 6vw, 90px); color: white;
+}
+.main-header .header { flex: 1; }
+.main-header h5 {
+  display: inline-block; color: #b4d9bd; font-size: 12px;
+  letter-spacing: 2.4px; text-transform: uppercase; margin-bottom: 15px;
+}
+.main-header h2 {
+  color: #fff; font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(38px, 5vw, 62px); font-weight: 500;
+  letter-spacing: -1.8px; line-height: 1.06; max-width: 560px; margin: 0 0 22px;
+}
+.main-header p { color: #d0ded4; font-size: 16px; line-height: 1.8; max-width: 480px; margin-bottom: 30px; }
+.main-header > img {
+  display: block; flex: 0 1 46%; width: 46%; height: 365px;
+  object-fit: cover; border-radius: 5px; box-shadow: 22px 22px 0 rgba(142,190,151,.15);
+}
+.main-header .btn {
+  border-radius: 5px; padding: 13px 21px; font-size: 13px; font-weight: 600;
+  background: #398c5c; border-color: #398c5c;
+}
+.main-header .btn-outline { color: #fff; border-color: #91b79b; background: transparent; }
+.main-header .btn-outline:hover { background: #fff; color: var(--verde-noite); }
+.categories { width: min(1120px, 88%); padding: 82px 0 90px; }
+.cat-header { margin-bottom: 34px; }
+.cat-header h2 {
+  color: var(--verde-noite); font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(28px, 3vw, 38px); font-weight: 500; letter-spacing: -.6px;
+}
+.cat-header p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+.cat-books { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 14px; }
+.cat-books .books {
+  width: auto; padding: 0 0 18px; overflow: hidden; text-align: left;
+  border: 1px solid var(--linha); border-radius: 6px; background: #fff;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.cat-clicavel:hover { transform: translateY(-5px); box-shadow: 0 14px 28px rgba(16,55,34,.1); }
+.cat-books .books .book-img {
+  width: 100%; height: 132px; padding: 0; margin: 0; border-radius: 0;
+  background: #e9eee8; overflow: hidden;
+}
+.cat-books .books img { width: 100%; height: 100%; object-fit: cover; }
+.cat-books .books h4 { margin: 15px 16px 0; color: var(--verde-noite); font-size: 16px; }
+.cat-books .books p { padding: 4px 16px 0; color: var(--muted); font-size: 12px; }
+.pesquisa-section { background: #edf2eb; padding: 78px max(6%, calc((100% - 1120px)/2)); border: 0; }
+.pesquisa-section .cat-header, .catalogo-section > .cat-header { margin-bottom: 34px; }
+.pesquisa-box {
+  padding: 26px; border: 1px solid var(--linha); border-top: 3px solid var(--verde);
+  border-radius: 6px; box-shadow: 0 12px 30px rgba(20,48,28,.05);
+}
+.pesquisa-barra-principal { border-radius: 5px; border: 1px solid #dce4da; background: #fbfcf9; }
+.pesquisa-barra-principal:focus-within { border-color: var(--verde); }
+.btn-limpar-pesquisa { border-radius: 5px; background: var(--verde-noite); }
+.input-group label { color: #34483a; font-weight: 600; }
+.input-group input, .input-group select { border-radius: 5px; border-color: #d8e0d7; padding: 12px 13px; }
+.catalogo-section { background: var(--papel); padding: 82px max(6%, calc((100% - 1120px)/2)); }
+.resumo-painel { gap: 14px; }
+.card-resumo {
+  padding: 24px 18px; text-align: left; border: 1px solid var(--linha);
+  border-bottom: 3px solid var(--verde); border-radius: 5px; box-shadow: none;
+}
+.card-resumo span { color: var(--verde-profundo); font-family: Georgia, serif; font-size: 36px; }
+.card-resumo p { color: var(--muted); font-size: 12px; }
+.form-container {
+  padding: clamp(22px, 4vw, 38px); border: 1px solid var(--linha);
+  border-radius: 6px; box-shadow: 0 10px 30px rgba(20,48,28,.05);
+}
+.form-container h3 { font-family: Georgia, serif; font-size: 25px; font-weight: 500; }
+.btn-apagar-acervo { border-radius: 5px; }
+.livros-grid { gap: 18px; }
+.livro-card {
+  border: 1px solid var(--linha); border-radius: 6px; box-shadow: 0 5px 18px rgba(20,48,28,.045);
+  transition: transform .2s ease, box-shadow .2s ease; overflow: hidden;
+}
+.livro-card:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(20,48,28,.09); }
+.capa-livro { background: #f0f2ec; border-radius: 3px; }
+.livro-card h4 { color: var(--verde-noite); font-family: Georgia, serif; font-size: 19px; }
+.livro-badge { background: var(--verde-claro); color: var(--verde-profundo); border-radius: 3px; }
+.livro-preco { color: var(--verde-profundo); font-weight: 700; }
+.btn-acao { border-radius: 4px; }
+.notificacoes-site { z-index: 2000; }
+@media (max-width: 900px) {
+  .navbar { height: auto; min-height: 76px; padding: 16px 5%; flex-wrap: wrap; gap: 14px; }
+  .navmenu { flex-wrap: wrap; gap: 10px; }
+  .main-header { width: 88%; min-height: auto; padding: 58px 0 68px; }
+  .main-header > img { height: 300px; }
+  .cat-books { grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+@media (max-width: 620px) {
+  .navbar { align-items: flex-start; }
+  .navmenu { width: 100%; align-items: flex-start; }
+  .navmenu ul { display: flex; flex-wrap: wrap; gap: 8px 0; }
+  .campo-de-busca { width: 100%; }
+  .campo-de-busca .procurar { width: 100%; }
+  .main-header { flex-direction: column; align-items: stretch; padding: 48px 0 58px; }
+  .main-header h2 { font-size: 42px; }
+  .main-header > img { width: calc(100% - 14px); height: 240px; flex: auto; }
+  .cat-books { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+  .cat-books .books .book-img { height: 112px; }
+  .pesquisa-section, .catalogo-section { padding: 58px 6%; }
+  .pesquisa-box { padding: 18px; }
+  .pesquisa-barra-principal { flex-wrap: wrap; }
+  .pesquisa-barra-principal input { min-width: 0; }
+  .btn-limpar-pesquisa { width: 100%; }
+}
