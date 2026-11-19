@@ -69,20 +69,26 @@ async function carregarLivrosDoBanco() {
             vendidos: Number(l.vendidos)
         }));
     } else {
-        const dadosIniciais = livros.map(({ id, ...l }) => l);
-        const { data: inseridos, error: erroInsert } = await supabaseClient
-            .from('livros')
-            .insert(dadosIniciais)
-            .select();
+        // Se o navegador já registrou um acervo vazio, respeita a escolha do usuário.
+        // Só inclui os livros iniciais na primeira visita, quando ainda não há estado local.
+        const acervoLocal = localStorage.getItem('biblioteca_livros');
+        if (acervoLocal === null && livrosIniciais.length > 0) {
+            const { data: inseridos, error: erroInsert } = await supabaseClient
+                .from('livros')
+                .insert(livrosIniciais)
+                .select();
 
-        if (erroInsert) throw erroInsert;
-        livros = inseridos.map(l => ({
-            ...l,
-            preco: Number(l.preco),
-            estoque: Number(l.estoque),
-            emprestados: Number(l.emprestados),
-            vendidos: Number(l.vendidos)
-        }));
+            if (erroInsert) throw erroInsert;
+            livros = inseridos.map(l => ({
+                ...l,
+                preco: Number(l.preco),
+                estoque: Number(l.estoque),
+                emprestados: Number(l.emprestados),
+                vendidos: Number(l.vendidos)
+            }));
+        } else {
+            livros = [];
+        }
     }
 
     localStorage.setItem('biblioteca_livros', JSON.stringify(livros));
@@ -115,6 +121,8 @@ const btnSalvar = document.getElementById('btnSalvar');
 const btnCancelar = document.getElementById('btnCancelar');
 
 const listaLivrosEl = document.getElementById('listaLivros');
+
+const btnApagarAcervo = document.getElementById('btnApagarAcervo');
 
 
 
@@ -708,6 +716,45 @@ async function excluirLivro(id) {
 }
 
 
+
+
+
+// Apaga todos os livros do Supabase e sincroniza a tela.
+btnApagarAcervo.addEventListener('click', async () => {
+    if (livros.length === 0) {
+        notificarSite('O acervo já está vazio.', 'erro');
+        return;
+    }
+
+    const confirmar = confirm(
+        `ATENÇÃO: isso apagará permanentemente os ${livros.length} livros do acervo compartilhado no banco de dados. Deseja continuar?`
+    );
+    if (!confirmar) return;
+
+    btnApagarAcervo.disabled = true;
+    btnApagarAcervo.textContent = 'Apagando...';
+
+    try {
+        const { error } = await supabaseClient
+            .from('livros')
+            .delete()
+            .not('id', 'is', null);
+
+        if (error) throw error;
+
+        livros = [];
+        localStorage.setItem('biblioteca_livros', JSON.stringify(livros));
+        resetarFormulario();
+        atualizarTudo();
+        notificarSite('Todos os livros foram apagados do banco de dados.');
+    } catch (error) {
+        console.error('Erro ao apagar o acervo:', error);
+        notificarSite('Não foi possível apagar o acervo: ' + error.message, 'erro');
+    } finally {
+        btnApagarAcervo.disabled = false;
+        btnApagarAcervo.innerHTML = '<i class="bx bx-trash"></i> Apagar todos os livros';
+    }
+});
 
 // Inicializa a aplicação carregando os dados compartilhados do Supabase.
 (async function iniciarAplicacao() {
