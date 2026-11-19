@@ -549,72 +549,80 @@ function filtrarPorCategoria(nomeCategoria) {
 
 
 
-// Cadastrar ou Salvar Edição
-
-livroForm.addEventListener('submit', function (e) {
-
+// Cadastrar ou Salvar Edição diretamente no Supabase
+livroForm.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-
-
-    const id = livroIdInput.value;
-
     const dadosLivro = {
-
         titulo: tituloInput.value.trim(),
-
         autor: autorInput.value.trim(),
-
         categoria: categoriaInput.value,
-
-        preco: parseFloat(precoInput.value),
-
-        estoque: parseInt(estoqueInput.value, 10)
-
+        preco: Number(precoInput.value),
+        estoque: Number.parseInt(estoqueInput.value, 10)
     };
 
-
-
-    if (id) {
-
-        const index = livros.findIndex(l => l.id === Number(id));
-
-        if (index !== -1) {
-
-            livros[index] = { ...livros[index], ...dadosLivro };
-
-            alert('Livro atualizado com sucesso!');
-
-        }
-
-    } else {
-
-        const novoLivro = {
-
-            id: Date.now(),
-
-            ...dadosLivro,
-
-            emprestados: 0,
-
-            vendidos: 0
-
-        };
-
-        livros.push(novoLivro);
-
-        alert('Livro cadastrado com sucesso!');
-
+    if (!dadosLivro.titulo || !dadosLivro.autor ||
+        !Number.isFinite(dadosLivro.preco) || dadosLivro.preco < 0 ||
+        !Number.isInteger(dadosLivro.estoque) || dadosLivro.estoque < 0) {
+        alert('Preencha os campos corretamente antes de cadastrar.');
+        return;
     }
 
+    btnSalvar.disabled = true;
+    btnSalvar.textContent = 'Salvando...';
 
+    try {
+        const id = livroIdInput.value;
+        let livroSalvo;
 
-    resetarFormulario();
+        if (id) {
+            const { data, error } = await supabaseClient
+                .from('livros')
+                .update(dadosLivro)
+                .eq('id', id)
+                .select()
+                .single();
 
-    salvarDados();
+            if (error) throw error;
+            livroSalvo = data;
+            const index = livros.findIndex(l => String(l.id) === String(id));
+            if (index !== -1) livros[index] = {
+                ...livroSalvo,
+                preco: Number(livroSalvo.preco),
+                estoque: Number(livroSalvo.estoque),
+                emprestados: Number(livroSalvo.emprestados),
+                vendidos: Number(livroSalvo.vendidos)
+            };
+            alert('Livro atualizado com sucesso!');
+        } else {
+            const { data, error } = await supabaseClient
+                .from('livros')
+                .insert({ ...dadosLivro, emprestados: 0, vendidos: 0 })
+                .select()
+                .single();
 
-    atualizarTudo();
+            if (error) throw error;
+            livroSalvo = data;
+            livros.push({
+                ...livroSalvo,
+                preco: Number(livroSalvo.preco),
+                estoque: Number(livroSalvo.estoque),
+                emprestados: Number(livroSalvo.emprestados),
+                vendidos: Number(livroSalvo.vendidos)
+            });
+            alert('Livro cadastrado com sucesso!');
+        }
 
+        localStorage.setItem('biblioteca_livros', JSON.stringify(livros));
+        resetarFormulario();
+        atualizarTudo();
+    } catch (error) {
+        console.error('Erro ao salvar livro:', error);
+        alert('Não foi possível salvar o livro. Confira a conexão e as permissões da tabela livros no Supabase. Detalhe: ' + error.message);
+    } finally {
+        btnSalvar.disabled = false;
+        btnSalvar.textContent = livroIdInput.value ? 'Salvar Alterações' : 'Cadastrar Livro';
+    }
 });
 
 
@@ -769,7 +777,7 @@ function comprarLivro(id) {
 
 // Excluir
 
-function excluirLivro(id) {
+async function excluirLivro(id) {
 
     const livro = livros.find(l => l.id === id);
 
