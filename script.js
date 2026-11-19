@@ -456,11 +456,6 @@ inputBuscaTopo.addEventListener('keypress', (e) => {
 
 function filtrarPorCategoria(nomeCategoria) {
 
-    if (document.body.dataset.page === 'inicio') {
-        window.location.href = 'pesquisa.html?categoria=' + encodeURIComponent(nomeCategoria);
-        return;
-    }
-
     filtroCategoria.value = nomeCategoria;
 
     renderizarPesquisa();
@@ -732,10 +727,6 @@ async function excluirLivro(id) {
 // Inicializa a aplicação carregando os dados compartilhados do Supabase.
 (async function iniciarAplicacao() {
     try {
-        const categoriaInicial = new URLSearchParams(window.location.search).get('categoria');
-        if (categoriaInicial && [...filtroCategoria.options].some(opcao => opcao.value === categoriaInicial)) {
-            filtroCategoria.value = categoriaInicial;
-        }
         await carregarLivrosDoBanco();
         atualizarTudo();
     } catch (error) {
