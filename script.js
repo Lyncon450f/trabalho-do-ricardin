@@ -22,108 +22,30 @@ function notificarSite(mensagem, tipo = 'sucesso') {
 // Estado inicial com livros de exemplo
 
 const livrosIniciais = [
-
-    {
-
-        id: 1,
-
-        titulo: "Clean Code",
-
-        autor: "Robert C. Martin",
-
-        categoria: "Tecnologia",
-
-        preco: 89.90,
-
-        estoque: 4,
-
-        emprestados: 1,
-
-        vendidos: 2
-
-    },
-
-    {
-
-        id: 2,
-
-        titulo: "Dom Casmurro",
-
-        autor: "Machado de Assis",
-
-        categoria: "Ficção",
-
-        preco: 34.50,
-
-        estoque: 6,
-
-        emprestados: 0,
-
-        vendidos: 5
-
-    },
-
-    {
-
-        id: 3,
-
-        titulo: "Sapiens: Uma Breve História da Humanidade",
-
-        autor: "Yuval Noah Harari",
-
-        categoria: "História",
-
-        preco: 64.00,
-
-        estoque: 2,
-
-        emprestados: 2,
-
-        vendidos: 3
-
-    },
-
-    {
-
-        id: 4,
-
-        titulo: "Uma Breve História do Tempo",
-
-        autor: "Stephen Hawking",
-
-        categoria: "Ciências",
-
-        preco: 52.00,
-
-        estoque: 0,
-
-        emprestados: 3,
-
-        vendidos: 4
-
-    },
-
-    {
-
-        id: 5,
-
-        titulo: "Pai Rico, Pai Pobre",
-
-        autor: "Robert Kiyosaki",
-
-        categoria: "Negócios",
-
-        preco: 45.90,
-
-        estoque: 8,
-
-        emprestados: 1,
-
-        vendidos: 9
-
-    }
-
+    { titulo: "Dom Casmurro", autor: "Machado de Assis", categoria: "Ficção", preco: 39.90, estoque: 5, emprestados: 0, vendidos: 0 },
+    { titulo: "A Revolução dos Bichos", autor: "George Orwell", categoria: "Ficção", preco: 34.90, estoque: 4, emprestados: 0, vendidos: 0 },
+    { titulo: "Harry Potter e a Pedra Filosofal", autor: "J. K. Rowling", categoria: "Ficção", preco: 49.90, estoque: 3, emprestados: 0, vendidos: 0 },
+    { titulo: "O Hobbit", autor: "J. R. R. Tolkien", categoria: "Ficção", preco: 44.90, estoque: 4, emprestados: 0, vendidos: 0 },
+    { titulo: "O Pequeno Príncipe", autor: "Antoine de Saint-Exupéry", categoria: "Ficção", preco: 29.90, estoque: 6, emprestados: 0, vendidos: 0 },
+    { titulo: "Sapiens: Uma Breve História da Humanidade", autor: "Yuval Noah Harari", categoria: "História", preco: 59.90, estoque: 3, emprestados: 0, vendidos: 0 },
+    { titulo: "Código Limpo (Clean Code)", autor: "Robert C. Martin", categoria: "Tecnologia", preco: 89.90, estoque: 2, emprestados: 0, vendidos: 0 }
 ];
+
+// Capas de edições reais, localizadas pelo ISBN no catálogo Open Library.
+const capasPorTitulo = {
+    "Dom Casmurro": "9788535902778",
+    "A Revolução dos Bichos": "9788535909555",
+    "Harry Potter e a Pedra Filosofal": "9788532511010",
+    "O Hobbit": "9788595084742",
+    "O Pequeno Príncipe": "9788522031445",
+    "Sapiens: Uma Breve História da Humanidade": "9788525432186",
+    "Código Limpo (Clean Code)": "9780132350884"
+};
+
+function obterCapaLivro(livro) {
+    const isbn = capasPorTitulo[livro.titulo];
+    return isbn ? `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg` : "";
+}
 
 
 
@@ -278,68 +200,29 @@ function criarCardLivro(livro) {
 
 
 
+    const capa = obterCapaLivro(livro);
+    const tituloSeguro = String(livro.titulo).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    const autorSeguro = String(livro.autor).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     card.innerHTML = `
-
         <div>
-
+            ${capa ? `<img class="capa-livro" src="${capa}" alt="Capa de ${tituloSeguro}" loading="lazy" onerror="this.style.display='none';">` : ''}
             <span class="livro-badge">${livro.categoria}</span>
-
-            <h4>${livro.titulo}</h4>
-
-            <p class="livro-autor">por ${livro.autor}</p>
-
-
-
+            <h4>${tituloSeguro}</h4>
+            <p class="livro-autor">por ${autorSeguro}</p>
             <div class="livro-detalhes">
-
                 <div class="livro-preco">R$ ${livro.preco.toFixed(2).replace('.', ',')}</div>
-
                 <div><strong>Disponível em estoque:</strong> ${livro.estoque} un.</div>
-
                 <div><strong>Emprestados:</strong> ${livro.emprestados} un.</div>
-
                 <div><strong>Vendidos:</strong> ${livro.vendidos} un.</div>
-
             </div>
-
         </div>
-
-
-
         <div class="livro-acoes">
-
-            <button class="btn-acao btn-emprestar" onclick="emprestarLivro(${livro.id})" ${livro.estoque === 0 ? 'disabled' : ''}>
-
-                Emprestar
-
-            </button>
-
-            <button class="btn-acao btn-devolver" onclick="devolverLivro(${livro.id})" ${livro.emprestados === 0 ? 'disabled' : ''}>
-
-                Devolver
-
-            </button>
-
-            <button class="btn-acao btn-comprar" onclick="comprarLivro(${livro.id})" ${livro.estoque === 0 ? 'disabled' : ''}>
-
-                Comprar
-
-            </button>
-
-            <button class="btn-acao btn-editar" onclick="prepararEdicao(${livro.id})">
-
-                Editar
-
-            </button>
-
-            <button class="btn-acao btn-excluir" onclick="excluirLivro(${livro.id})">
-
-                Excluir do Acervo
-
-            </button>
-
+            <button class="btn-acao btn-emprestar" onclick="emprestarLivro(${livro.id})" ${livro.estoque === 0 ? 'disabled' : ''}>Emprestar</button>
+            <button class="btn-acao btn-devolver" onclick="devolverLivro(${livro.id})" ${livro.emprestados === 0 ? 'disabled' : ''}>Devolver</button>
+            <button class="btn-acao btn-comprar" onclick="comprarLivro(${livro.id})" ${livro.estoque === 0 ? 'disabled' : ''}>Comprar</button>
+            <button class="btn-acao btn-editar" onclick="prepararEdicao(${livro.id})">Editar</button>
+            <button class="btn-acao btn-excluir" onclick="excluirLivro(${livro.id})">Excluir do Acervo</button>
         </div>
-
     `;
 
     return card;
