@@ -1237,3 +1237,108 @@ header { min-height: auto; background: var(--verde-noite); }
   .pesquisa-barra-principal input { min-width: 0; }
   .btn-limpar-pesquisa { width: 100%; }
 }
+
+
+/* Responsividade final: celulares, tablets, notebooks e monitores grandes */
+html { width: 100%; overflow-x: clip; }
+body { width: 100%; min-width: 320px; overflow-x: clip; }
+img { max-width: 100%; }
+button, input, select, textarea { max-width: 100%; }
+.navbar {
+  width: 100%;
+  gap: 18px;
+  padding-inline: clamp(14px, 4vw, 56px);
+}
+.navbar .logo { flex: 0 1 auto; min-width: 0; }
+.navbar h2 { overflow-wrap: anywhere; }
+.navmenu {
+  flex: 1 1 620px;
+  min-width: 0;
+  justify-content: flex-end;
+  gap: clamp(8px, 1.5vw, 20px);
+}
+.navmenu ul { min-width: 0; flex-wrap: wrap; }
+.navmenu li { min-width: 0; }
+.navmenu li a { white-space: normal; }
+.campo-de-busca { flex: 0 1 260px; min-width: 150px; }
+.campo-de-busca .procurar { width: 100%; min-width: 0; }
+.main-header, .categories {
+  width: min(1120px, calc(100% - clamp(28px, 8vw, 96px)));
+}
+.main-header { min-width: 0; }
+.main-header > .header { min-width: 0; }
+.main-header > img { min-width: 0; max-width: 100%; }
+.pesquisa-section, .catalogo-section {
+  padding-left: max(16px, calc((100% - 1120px) / 2));
+  padding-right: max(16px, calc((100% - 1120px) / 2));
+}
+.pesquisa-box, .form-container { width: 100%; min-width: 0; }
+.pesquisa-filtros-grid, .form-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+}
+.livros-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr));
+  min-width: 0;
+}
+.livro-card, .card-resumo { min-width: 0; }
+.livro-card * { min-width: 0; }
+.livro-acoes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.btn-acao { overflow-wrap: anywhere; }
+.cat-books { grid-template-columns: repeat(auto-fit, minmax(min(100%, 175px), 1fr)); }
+.cat-books .books { min-width: 0; }
+.catalogo-section .resumo-painel {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+}
+.input-group input, .input-group select { width: 100%; min-width: 0; }
+.form-actions { flex-wrap: wrap; }
+.form-actions button { max-width: 100%; }
+
+@media (min-width: 1500px) {
+  .main-header, .categories { width: min(1280px, 88%); }
+  .pesquisa-section, .catalogo-section {
+    padding-left: max(6%, calc((100% - 1280px) / 2));
+    padding-right: max(6%, calc((100% - 1280px) / 2));
+  }
+  .livros-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+}
+@media (max-width: 900px) {
+  .navbar { justify-content: center; }
+  .navbar .logo { width: 100%; text-align: center; }
+  .navmenu { flex: 1 1 100%; justify-content: center; }
+  .campo-de-busca { flex: 1 1 100%; max-width: 440px; }
+  .main-header { gap: 30px; }
+}
+@media (max-width: 620px) {
+  .navbar { align-items: center; padding: 14px 16px; }
+  .navmenu { align-items: stretch; }
+  .navmenu ul { justify-content: center; }
+  .navmenu li a { display: block; padding: 8px 9px; font-size: 12px; }
+  .main-header, .categories { width: calc(100% - 32px); }
+  .main-header { text-align: left; padding: 42px 0 50px; }
+  .main-header h2 { font-size: clamp(32px, 9vw, 42px); overflow-wrap: anywhere; }
+  .main-header p { font-size: 14px; }
+  .hero-btns { justify-content: flex-start; }
+  .main-header .btn { text-align: center; }
+  .main-header > img { width: 100%; height: clamp(190px, 58vw, 270px); }
+  .categories { padding: 48px 0; }
+  .cat-books { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cat-books .books .book-img { height: clamp(90px, 28vw, 130px); }
+  .pesquisa-section, .catalogo-section { padding: 46px 16px; }
+  .pesquisa-box, .form-container { padding: 16px; }
+  .pesquisa-barra-principal { gap: 8px; }
+  .pesquisa-barra-principal input { flex: 1 1 calc(100% - 40px); }
+  .catalogo-section .resumo-painel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card-resumo { padding: 16px 10px; }
+  .card-resumo span { font-size: 28px; }
+  .livros-grid { grid-template-columns: minmax(0, 1fr); }
+  .livro-acoes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 360px) {
+  .navbar h2 { font-size: 19px; }
+  .navmenu li a { font-size: 11px; padding: 7px; }
+  .cat-books, .catalogo-section .resumo-painel { grid-template-columns: minmax(0, 1fr); }
+  .hero-btns { flex-direction: column; }
+  .hero-btns .btn { width: 100%; }
+  .livro-acoes { grid-template-columns: minmax(0, 1fr); }
+  .btn-excluir { grid-column: auto; }
+}
