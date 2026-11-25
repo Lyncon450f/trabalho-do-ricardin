@@ -1342,3 +1342,39 @@ button, input, select, textarea { max-width: 100%; }
   .livro-acoes { grid-template-columns: minmax(0, 1fr); }
   .btn-excluir { grid-column: auto; }
 }
+
+
+/* Capas de livros: proporção consistente e alternativa visual quando indisponíveis */
+.capa-livro {
+  display: block;
+  width: min(100%, 190px);
+  height: 250px;
+  margin: 0 auto 16px;
+  object-fit: contain;
+  object-position: center;
+  background: #eef1eb;
+  border: 1px solid #e0e6dc;
+  border-radius: 4px;
+}
+.capa-livro-placeholder {
+  width: min(100%, 190px);
+  min-height: 250px;
+  margin: 0 auto 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #68756c;
+  background: linear-gradient(145deg, #edf1e9, #dfe8dd);
+  border: 1px dashed #b9c8b8;
+  border-radius: 4px;
+  font: 600 13px/1.5 'Poppins', sans-serif;
+}
+@media (max-width: 620px) {
+  .capa-livro, .capa-livro-placeholder {
+    width: min(100%, 170px);
+    height: 225px;
+    min-height: 225px;
+  }
+}
