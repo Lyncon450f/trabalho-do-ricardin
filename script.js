@@ -98,6 +98,10 @@ async function recuperarCapaLivro(img, isbn, titulo) {
             if (!alternativa) throw new Error('Capa não encontrada');
 
             img.onload = () => { img.dataset.capaCarregada = 'true'; };
+            img.onerror = () => {
+                img.onerror = null;
+                mostrarPlaceholder();
+            };
             img.src = alternativa.replace(/^http:/, 'https:');
         } catch {
             mostrarPlaceholder();
