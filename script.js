@@ -68,7 +68,41 @@ Object.assign(capasPorTitulo, {
 
 function obterCapaLivro(livro) {
     const isbn = capasPorTitulo[livro.titulo];
-    return isbn ? `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg` : "";
+    return isbn ? `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg?default=false` : "";
+}
+
+// Busca uma edição correspondente no Google Books quando a capa da Open Library
+// não existe. Se nenhum catálogo tiver imagem, mantém um cartão de capa neutro.
+async function recuperarCapaLivro(img, isbn, titulo) {
+    if (!img || !isbn) return;
+
+    const mostrarPlaceholder = () => {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'capa-livro-placeholder';
+        placeholder.setAttribute('role', 'img');
+        placeholder.setAttribute('aria-label', `Capa indisponível para ${titulo}`);
+        placeholder.textContent = 'Capa indisponível';
+        img.replaceWith(placeholder);
+    };
+
+    img.onerror = async () => {
+        img.onerror = null;
+        try {
+            const resposta = await fetch(
+                `https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(isbn)}&maxResults=1`
+            );
+            if (!resposta.ok) throw new Error('Google Books indisponível');
+            const dados = await resposta.json();
+            const links = dados.items?.[0]?.volumeInfo?.imageLinks;
+            const alternativa = links?.thumbnail || links?.smallThumbnail;
+            if (!alternativa) throw new Error('Capa não encontrada');
+
+            img.onload = () => { img.dataset.capaCarregada = 'true'; };
+            img.src = alternativa.replace(/^http:/, 'https:');
+        } catch {
+            mostrarPlaceholder();
+        }
+    };
 }
 
 
@@ -218,7 +252,7 @@ function criarCardLivro(livro) {
     const autorSeguro = String(livro.autor).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     card.innerHTML = `
         <div>
-            ${capa ? `<img class="capa-livro" src="${capa}" alt="Capa de ${tituloSeguro}" loading="lazy" onerror="this.style.display='none';">` : ''}
+            ${capa ? `<img class="capa-livro" src="${capa}" alt="Capa de ${tituloSeguro}" loading="lazy">` : '<div class="capa-livro-placeholder">Sem capa cadastrada</div>'}
             <span class="livro-badge">${livro.categoria}</span>
             <h4>${tituloSeguro}</h4>
             <p class="livro-autor">por ${autorSeguro}</p>
@@ -237,6 +271,9 @@ function criarCardLivro(livro) {
             <button class="btn-acao btn-excluir" onclick="excluirLivro(${livro.id})">Excluir do Acervo</button>
         </div>
     `;
+
+    const imagemCapa = card.querySelector('.capa-livro');
+    if (imagemCapa) recuperarCapaLivro(imagemCapa, capasPorTitulo[livro.titulo], livro.titulo);
 
     return card;
 
